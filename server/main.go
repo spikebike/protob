@@ -9,12 +9,12 @@ import (
 	"net"
 	"os"
 
-	"github.com/golang/protobuf/proto"
 	"github.com/spikebike/protob/sum"
+	"google.golang.org/protobuf/proto"
 )
 
 func main() {
-	cert, err := tls.LoadX509KeyPair("../certs/cert.pem", "../certs/key.pem")
+	cert, err := tls.LoadX509KeyPair("../certs/server.pem", "../certs/server.key")
 	if err != nil {
 		log.Fatalf("server: loadkeys: %s", err)
 	}

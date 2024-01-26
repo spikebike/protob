@@ -4,17 +4,15 @@ import (
 	"crypto/tls"
 	"encoding/binary"
 	"fmt"
-	"io"
-	"net"
-
-	"github.com/golang/protobuf/proto"
 	"github.com/spikebike/protob/sum"
+	"google.golang.org/protobuf/proto"
+	"io"
 )
 
 func main() {
 
 	config := &tls.Config{
-		// InsecureSkipVerify: true, // uncomment this line for local testing without valid SSL certificates
+		InsecureSkipVerify: true, // uncomment this line for local testing without valid SSL certificates
 		ServerName: "servername",
 	}
 
