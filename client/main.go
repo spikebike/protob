@@ -1,17 +1,28 @@
 package main
 
 import (
+	"crypto/tls"
 	"encoding/binary"
 	"fmt"
 	"io"
 	"net"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/spikebike/proto/sum"
+	"github.com/spikebike/protob/sum"
 )
 
 func main() {
-	conn, err := net.Dial("tcp", ":4040")
+
+	config := &tls.Config{
+		// InsecureSkipVerify: true, // uncomment this line for local testing without valid SSL certificates
+		ServerName: "servername",
+	}
+
+	conn, err := tls.Dial("tcp", "localhost:4040", config)
+	if err != nil {
+		fmt.Printf("client: dial: %s", err)
+	}
+
 	if err != nil {
 		fmt.Printf("Failed to connect to server: %v", err)
 	}

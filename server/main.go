@@ -1,18 +1,26 @@
 package main
 
 import (
+	"crypto/tls"
 	"encoding/binary"
 	"fmt"
 	"io"
+	"log"
 	"net"
 	"os"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/spikebike/proto/sum"
+	"github.com/spikebike/protob/sum"
 )
 
 func main() {
-	listener, err := net.Listen("tcp", ":4040")
+	cert, err := tls.LoadX509KeyPair("../certs/cert.pem", "../certs/key.pem")
+	if err != nil {
+		log.Fatalf("server: loadkeys: %s", err)
+	}
+	config := tls.Config{Certificates: []tls.Certificate{cert}}
+
+	listener, err := tls.Listen("tcp", ":4040", &config)
 	if err != nil {
 		fmt.Printf("Failed to open port: %v", err)
 	}
